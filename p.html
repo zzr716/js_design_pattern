@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>练习一</title>
+</head>
+<body>
+<script>
+/*作者:周芷若
+ *时间：2017年7月3日
+ *实现代理模式，
+ *在对象执行之前由其代理对象代为执行实现深入的交互功能
+ */
+ var Flower = function (type, price) {
+   this.type=type;
+   this.price=price;
+ }
+ Flower.prototype.buy = function () {
+   console.log('您购买了'+this.type+'请付'+this.price+'元');
+ }
+ var flower = new Flower('rose', 99);
+ flower.buy();
+ var lcf = {
+   name: "李闯峰",
+   age: 21,
+   city: "宜春",
+   sendFlower: function (target){
+     target.receiveFlower();
+   }
+ }
+ var xxx = {
+   name: "XXX",
+   age: 20,
+   receiveFlower: function () {
+     console.log("收到了花");
+   },
+   listenGoodMood: function (fn) {
+     console.log("心情不好");
+     setTimeout(function () {
+       console.log("心情好，该约的约");
+       fn();
+     },10000)
+   }
+ }
+ var xiaohong = {
+   name: "小红",
+   nickname: "送花使者",
+   //接口
+   receiveFlower: function () {
+     xxx.listenGoodMood(function () {
+       xxx.receiveFlower();
+     });
+   }
+ }
+ lcf.sendFlower(xiaohong);
+</script>
+</body>
+</html>
