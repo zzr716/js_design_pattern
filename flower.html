@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>练习一</title>
+</head>
+<body>
+<script>
+//js的表现力
+var Flower=function(){}//flower类
+var xiaoming={
+  name: "小明",
+  age:22,
+  //送花
+  sendFlower: function(target){
+    //送花
+    var flower=new Flower();
+    //收
+    target.receiveFlower(flower,this);
+  }
+}
+var xiaomei={
+  name:"小美",
+  age:21,
+receiveFlower:function(flower,sender){
+  console.log(this.name+"收到了"+sender.name+"送的花");
+}
+}
+//小红 代理模式
+var xiaohong={
+
+  receiveFlower:function(flower,sender){
+    //小美心情如何
+    //小美是否有男朋友
+    if(sender.name=='小明'){
+      console.log("在一起");
+    }
+    else{
+    xiaomei.receiveFlower(flower,sender);
+  }
+  }
+}
+xiaoming.sendFlower(xiaohong);
+</script>
+</body>
+</html>
