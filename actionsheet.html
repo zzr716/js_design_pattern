@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ActionSheet</title>
+  <style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .weui-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 1000;
+    display: none;
+  }
+  /*actionsheet 组件样式 begin*/
+  .weui-actionsheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    z-index: 5000;
+    background-color: #EFEFF4;
+    -webkit-transition: transform .3s;
+    transition: transform .3s;
+    -webkit-transform: translate(0, 100%);
+    transform: translate(0, 100%);
+  }
+  .weui-actionsheet_toggle {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  .weui-actionsheet__title {
+    position: relative;
+    height: 65px;
+    padding: 0 20px;
+    line-height: 1.4;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    background: #FCFCFD;
+  }
+  .weui-actionsheet__title .weui-action__title-text {
+    /*截断文字 多出现在移动端 影响到下面的高度*/
+    overflow: hidden;
+    text-overflow: ellipsis;/*当文字超出父容器宽度打三个点*/
+    /*最多行数为2行*/
+    /*white-space: nowrap;*/
+    /*1行*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .weui-actionsheet__title:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+  }
+  .weui-actionsheet__menu {
+    background-color: #FCFCFD;
+  }
+  .weui-actionsheet__cell {
+    position: relative;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 18px;
+  }
+  .weui-actionsheet__cell:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    border-top: 1px solid #e5e5e5;
+    color: #e5e5e5;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+  }
+  .weui-actionsheet__action {
+    margin-top: 6px;
+    background-color: #FCFCFD;
+  }
+  /*actionsheet 组件样式 end*/
+  </style>
+</head>
+<body>
+  <a href="javascript:;" class="btn">点击</a>
+<div>
+  <!-- 命名空间 -->
+  <div class="weui-mask">
+  </div>
+  <!-- 移动端最为核心的交互组件  独立组件的开始 block BEM-->
+  <div class="weui-actionsheet" id="iosActionsheet">
+    <!-- __表示Element即组件的元素 表示到下一层-->
+    <div class="weui-actionsheet__title">
+      <p class="weui-action__title-text">这是一个标题，可以为一行或两行。
+        这是一个标题，可以为一行或两行。这是一个标题，可以为一行或两行。
+        这是一个标题，可以为一行或两行。这是一个标题，可以为一行或两行。
+        这是一个标题，可以为一行或两行。这是一个标题，可以为一行或两行。
+        这是一个标题，可以为一行或两行。这是一个标题，可以为一行或两行。
+      </p>
+    </div>
+    <div class="weui-actionsheet__menu">
+      <div class="weui-actionsheet__cell">示例菜单</div>
+      <div class="weui-actionsheet__cell">示例菜单</div>
+      <div class="weui-actionsheet__cell">示例菜单</div>
+      <div class="weui-actionsheet__cell">示例菜单</div>
+    </div>
+    <div class="weui-actionsheet__action">
+      <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+    </div>
+  </div>
+  <script>
+    const btn = document.querySelector('.btn');
+    const mask = document.querySelector('.weui-mask');
+    const iosActionsheet = document.getElementById('iosActionsheet');
+    const cancel = document.getElementById('iosActionsheetCancel');
+    cancel.addEventListener('click', function () {
+      mask.style.display = 'none';
+      iosActionsheet.classList.remove('weui-actionsheet_toggle');      
+    }, false);
+    btn.addEventListener('click', function () {
+      mask.style.display = 'block';
+      iosActionsheet.classList.add('weui-actionsheet_toggle');
+    }, false);
+  </script>
+</div>
+</body>
+</html>

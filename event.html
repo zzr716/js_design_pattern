@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>segmentfault 活动</title>
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <style>
+  /*通用业务样式 与框架样式是有区别的 tools*/
+  .clearfix {
+    clear: both;
+  }
+  /*.h5 {
+    font-weight: 500;
+    font-size: 20px;
+  }*/
+  .h4 {
+    font-size: 18px;
+  }
+  .mt20 {
+    margin-top: 20px !important;
+  }
+  .mb10 {
+    margin-bottom: 10px !important;
+  }
+  /*ysw业务样式，也叫event模块样式 row是框架样式*/
+  .all-event-list {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .all-event-list [class*=col-md] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  /*开发一个widget 是组件化开发之前的说法*/
+  .widget-event {
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    background: #f3f3f3;
+    height: 282px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden;
+
+  }
+  /*BEM中的Element*/
+  /*处理图片的时候会变形 因为设置的w*h与图片比例不一样*/
+  /*小编用后台上活动 作图 238*134*/
+  /*此时优先级为20*/
+  /*优先级公式*/
+  .all-event-list .widget-event__banner {
+    display: inline;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    background-color: #fff;
+    height: 135px;
+  }
+  /*BEM Element info*/
+  .widget-event__info {
+    padding: 15px 15px 0;
+  }
+  .widget-event__info .title {
+    margin: 0;
+    font-size: 16px;
+    /*小编同学 一行或两行都可以*/
+    max-height: 38px;
+    overflow: hidden;
+  }
+  .widget-event__info .titlw a{
+    color: #333;
+  }
+  /*Element 不是简单的递进关系*/
+  /*Element 是为block服务的*/
+  .widget-event__meta {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #999;
+  }
+  .widget-event__info .btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+  }
+  /*媒体查询 设备进行查询条件
+  微调 针对设备调节
+  最大宽度为767
+  ipad竖着拿的时候是1024*768*/
+  @media(max-width: 767px) {
+    /*只用于手机设备大改造区域*/
+    /*.all-event-list .widget-event__banner {
+      height: inherit;
+    }*/
+    /*id 100 class 10 tag 1*/
+    /*行内样式是除了important最高*/
+    /*important最高*/
+    /*等分 后面覆盖前面*/
+    /*#banner {
+      height: inherit;
+    }*/
+    .widget-event__banner {
+      height: inherit;
+    }
+    .widget-event {
+      padding-bottom: 15px;
+      height: auto;
+    }
+  }
+  /*ysw业务样式，也叫event模块样式 end*/
+  </style>
+</head>
+<body>
+  <!-- Layout 网页布局 -->
+  <div class="container">
+    <div class="row all-event-list mt20">
+      <!-- 自适应网页设计 RWD
+      一份代码全设备运行
+      iMac lg large screen 1400px
+      电脑pc md middle screen 一般1400px以下1000px以上
+      ipad sm small screen 750px-1000px之间
+      手机 xs exstreamly small 750px以下
+      这些都和device width有关 是以可以手动调整屏幕宽度来设置 还要注意横竖屏切换
+      bootstrap 实现方便 目的是在同一列上针对不同设备使用不同的列宽定义
+      这里指最低分别为3 2 1 -->
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img id="banner" src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+            <!-- 在bootstrap里跟元素无关只关心类名 -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="widget-event">
+          <a href="#">
+            <img src="https://sfault-activity.b0.upaiyun.com/952/032/95203245-59686c3f459c3_medium" alt="" class="widget-event__banner">
+          </a>
+          <div class="widget-event__info">
+            <h2 class="h4 title"><a href="#">Microsoft Tech Summit 2017</a></h2>
+            <ul class="widget-event__meta">
+              <li>时间：2017-10-23 周一</li>
+              <li>北京</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-sm">立即报名</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <div class="pagination">
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li class="disabled">
+          <span>...</span>
+        </li>
+        <li class="next">
+          <a href="#" rel="next">下一页</a>
+        </li>
+      </div>
+    </div>
+  </div>
+  <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+  // window.onload
+  // documentReady事件 html css 加载完成了
+  // 这是绑定事件的最佳时机
+  // $()函数主要功能是dom查找 相当于querySelectorAll以及 将html变成dom 结点
+  // 还有一个功能是 匿名函数 是jquery开始的事件
+  $(function() {
+    let newPageEles = $('.all-event-list>div:nth-child(2n)');
+    console.log(newPageEles);
+    // var htmls = newPageEles.map(ele => {
+    //   return $(ele).html()
+    // })
+    $('.all-event-list').on('click', 'a.btn', function() {
+      alert('报名');
+      return false;
+    });
+    // jquery 做多元素的事件绑定一绝
+    $('.pagination a').click(function(event) {
+      // 阻止默认行为
+      // event.preventDefault();
+      // alert('a');
+      // jquery return false 可以阻止默认事件
+      // 如果点的是当前页，不需要做任何事
+      // jquery 原生对象必须转成jquery对象才能调用jquery的链式方法
+      // 在加个[0]就能将jquery对象转成原生dom对象
+      // console.log($(this).parent()[0]);
+      if($(this).parent().hasClass('active'))
+      {
+        return false;
+      }
+      // 拿到当前页码
+      let page = $(this).html();
+      console.log(page);
+      $('.pagination .active').removeClass('active');
+      // 把之前的active去除加在自己的父元素上
+      $(this).parent().addClass('active');
+      $('.all-event-list').html('');
+      // 类数组变成真正的数组 Array.from
+      for(ele of Array.from(newPageEles)) {
+        // console.log(ele);
+        // 每一项都是节点 给父容器添加结点
+        $('.all-event-list').append($(ele));
+      }
+      return false;
+    })
+  })
+  </script>
+</body>
+</html>

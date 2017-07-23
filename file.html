@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HTML5 File APIS</title>
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <style>
+  .list-group {
+    border: 2px dashed #ccc;
+    min-height: 100px;
+    padding: 10px;
+  }
+  .list-group p {
+    color: #ccc;
+    line-height: 100px;
+    font-size: 30px;
+    text-align: center;
+  }
+  img {
+    /*图片大小默认不受限制
+    加上max-width 100% 让他不超出父元素的宽度 在高度上会自适应*/
+    max-width: 100%;
+  }
+  #evenstatus {
+    margin-top: 10px;
+  }
+  </style>
+</head>
+<body>
+  <!-- css 框架？ weui 类名系统 -->
+  <header id="header" class="page-header">
+    <!-- container：bootstrap 核心类 会给一个宽度 左右留白，最外层就给个bootstrap来定页面布局大小
+    940+15*2 小尺寸笔记本
+    1140+15*2 大电脑 -->
+    <div class="container">
+      <h1>文件列表</h1>
+      <h5>filelist</h5>
+    </div>
+  </header>
+  <div class="container">
+    <div class="row">
+      <!-- list-group 列表组 -->
+      <ul class="list-group clearfix">
+
+      </ul>
+    </div>
+    <form name="unload">
+      <!-- 按钮样式可以做任何的定制。
+      使命交给这个按钮 点击就相当于文件上传控件被点击 无论在pc还是移动端都点击了
+      一个按钮，但其实，他只是一个二传手 -->
+      <a href="javascript:;" id="selectbtn" class="btn btn-primary">上传文件</a>
+      <!-- 因为很丑所以隐藏，用户体验的细节 -->
+      <input type="file" id="fileInput" name="fileselect" multiple style="display:none;">
+    </form>
+    <div id="eventstatus"></div>
+  </div>
+  <!-- js 会阻塞页面加载，最好放在底部
+      html从上往下加载，下载到script就会停下来，下载完成，并执行一下。
+      页面性能优化
+      花时间，屏幕白一下。越多，页面打开越慢 -->
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  // const selectBtn = document.querySelector('#selectbtn');
+  // console.log(selectBtn);
+  // jquery $(选择器) 基本等于querySelector
+  // addEventListener
+  // jquery在三年， 前端世界就是家天下
+  // jquery核心：选择器很万能。相当于querySeletorAll
+  //              链式调用，可以让代码更加优雅
+  // 将file的丑交给bootstrap的按钮
+  $('#selectbtn').click(function() {
+    // alert('btn');
+    // 点select就是点不input
+    // js触发trigger事件
+    $('#fileInput').click();
+  });
+  // file change事件在上传确定文件后触发
+  $('#fileInput').change(function(event) {
+     // console.log('上传了文件');
+    // console.log(event);
+    displayFileInfo(event);
+  })
+  // 展示文件信息
+  function displayFileInfo(event) {
+    // html5 文件api
+    // 上传文件处理顺序
+    // fileList对象->File对象->临时的在客户端显示出来它的信息大小、上传进度->服务端上传
+    console.log(event);
+    var files = event.target.files;
+    console.log(files);
+    // for(var i = 0; i < files.length; i++) {
+    //   let file = files[i];
+    // }
+    // es6文件循环新api 不需要i可以用这个 也是熟悉的for
+    for(file of files) {
+    //   // 字符串模板： 多行 天生对html结构友好
+    //   // innerHtml简写为html
+    //   $('.list-group').html(`
+    //     <li class="file-info">
+    //       <p>文件名称：${file.name}</p>
+    //       <p>文件大小：${file.size}</p>
+    //       <p>文件类型：${file.type}</p>
+    //     </li>`);
+    // }
+    // dom 编程 通过js 创建html标签
+    // dom 编程 api createElement(标签)
+    // 父元素.appendChild(子元素)
+    // var li = document.createElement('li'),
+    // img = document.createElement('img'),
+    // thumbnailContainer = document.createElement('div'),
+    // 构建一个blob的临时地址，将其在页面显示
+    // 原因：图片没到服务器，无地址可用，
+    // 用户看不着就会着急，所以html5提供了一个临时预览地址（不是长久但是能快速预览）
+    // 点击上传即可见图片 并可以清楚地了解文件上传过程，比两眼一抹黑体验好很多
+    // 参数是文件对象
+    // url = window.URL.createObjectURL(file);
+    let url = window.URL.createObjectURL(file);
+    // blob：协议是什么? html5临时图片预览协议
+    // 关闭浏览器就会失效
+    // 为什么需要？硬盘地址和web地址不一样 无法使用
+    // console.log(url);
+    // img.src = url;// 刚刚生成的地址
+    // thumbnailContainer.appendChild(img);
+    // li.appendChild(thumbnailContainer);
+    // $('.list-group').append(li);//jquery 里的api 添加一个结点
+    // listGroup.appendChild(li);
+    // col-md-3 blod 散格系统
+    let fileSize = parseFloat(file.size/(1024)).toFixed(2);
+    const liStr = `
+    <li class="list-group-item">
+      <div>
+        <img class="thumbnail" src="${url}" />
+        <div class="file-infos">
+          <h3 class="title">${file.name}</h3>
+          <p>${fileSize}Kb</p>
+          <p>${file.type}</p>
+        </div>
+      </div>
+    </li>
+    `;
+    // 重设html 以前的就没有了
+    // append 而不是重设 append参数是一个节点而不是html字符串
+    // jquery $() 第二个作用 将html字符串变成文件节点
+    // $('.list-group').html(liStr);
+    $('.list-group').append($(liStr));
+  }
+  }
+  //console.log($('#selectbtn'));
+</script>
+</body>
+</html>

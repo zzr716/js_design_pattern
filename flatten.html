@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JavaScript专题之数组扁平化</title>
+</head>
+<body>
+  <script>
+  function flatten (arr) {
+    return arr.toString().split(',')
+  }
+  // function flatten (arr) {
+  //   var result = [];
+  //   // 有助于js性能优化
+  //   for(var i = 0, len =arr.length; i < len; i++) {
+  //     if (Array.isArray(arr[i])) {
+  //       // 这一定是个数组 要推平这个数组
+  //       // 递归 函数自己调用自己
+  //       result = result.concat(flatten(arr[i]));
+  //     } else {
+  //       result.push(arr[i]);
+  //     }
+  //   }
+  //   return result;
+  // }
+  var arr = [1,[2,[3,4]]];
+  console.log(flatten(arr))
+  </script>
+</body>
+</html>
