@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas 粒子系统</title>
+  <style>
+  #canvas {
+    display: block;
+    margin: 0 auto;
+  }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="1000" height="360" style="background-color: #EEEEEE;"></canvas>
+  <script>
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  // 绘制小球
+  // canvas 有很多绘图API 圆 填充了一些颜色
+  // 数据模型 应该是抽象的
+  // var ball = {
+  //   xPoint: 100,
+  //   yPoint: 100,
+  //   radius: 10,
+  //   color: 'blue'
+  // }
+  var ballList = [];
+  function draw () {
+    ctx.clearRect(0, 0, 1000, 360);
+    for(ball of ballList)
+    {
+    ctx.save(); // 绘制前的场景先保存一下
+    ctx.beginPath(); // 开始画
+    ctx.fillStyle = ball.color;
+    ctx.arc(ball.xPoint, ball.yPoint, ball.radius, 0, Math.PI*2, false)
+    ctx.closePath(); // 画完了
+    ctx.fill();
+  }
+  }
+  function update () {
+    // 小球动起来 赋予动能 运动方向？random运动速度？random
+    for (var i = 0; i< ballList.length; i++) {
+      ballList[i].xPoint += ballList[i].vx*ballList[i].x;
+      ballList[i].yPoint += ballList[i].vy*ballList[i].y;
+      if (ballList[i].xPoint + ballList[i].radius >= canvas.width ||
+      ballList[i].xPoint - ballList[i].radius <= 0) {
+        ballList[i].x = ballList[i].x * -1;
+      }
+      if (ballList[i].yPoint + ballList[i].radius >= canvas.height ||
+      ballList[i].yPoint - ballList[i].radius <= 0) {
+        ballList[i].y = ballList[i].y * -1;
+      }
+    }
+  }
+  function drawLine () {
+    for (var i = 0; i < ballList.length; i++) {
+      for (var j =0;j < ballList.length; j++) {
+        // 两重循环 每个小球都可以相互连接
+        var xx = Math.pow((ballList[i].xPoint - ballList[j].xPoint), 2);
+        var yy = Math.pow((ballList[i].yPoint - ballList[j].yPoint), 2);
+        var zz = Math.sqrt(xx + yy);
+        if (zz <= 100 && zz >= 20) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.stringStyle ='#999999';
+          ctx.lineWidth = 0.1;
+          ctx.moveTo(ballList[i].xPoint, ballList[i].yPoint); // 起始点
+          ctx.lineTo(ballList[j].xPoint, ballList[j].yPoint); // 结束点
+          ctx.closePath();
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+  }
+  function init () {
+    // 生成小球吧
+    for (var i = 0; i < 60; i++) {
+      var ball = {};
+      // 数据模型有了，比对着来造球
+      // 随机的坐标 封装成一个函数
+      // 在20-980之间产生 因为宽度为1000px
+      ball.xPoint = getRandom(20, 980);
+      ball.yPoint = getRandom(20, 340);
+      ball.radius = 9;
+      ball.color = "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
+      ball.x = getIndex();// 水平方向的运动反向
+      ball.y = getIndex();// 垂直方向的运动方向
+      ball.vx = Math.random();
+      ball.vy = Math.random();
+      ballList.push(ball);
+    }
+    console.log(ballList)
+    // js里面24ms是个极小值 是页面刷新可以感知的最小时间 不要些25ms以下的值
+    // 是个帧动画
+    // 1s = 1000ms/24 = 41.666帧 游戏一般60帧以上
+    setInterval(() => {
+      // canvas动作本质就是不停地画不停地擦除
+      // 时间快就感觉不到针的慢动作
+      draw(); // 此时没动 因为没被擦除
+      // 更新ballList
+      update();
+      drawLine();
+    }, 24)
+    // draw();
+  }
+  // 生成一个在范围内的随机数
+  function getRandom (start, end) {
+    // 0-960 start 20-980
+    var choice = end - start + 1;
+    return Math.floor(Math.random()*choice) + start;
+  }
+  function getIndex () {
+    var arr= [0,1];
+    var index = Math.floor(Math.random()*arr.length);
+    if (index == 0) {
+      index = -1;
+    }
+    return index;
+  }
+  window.addEventListener('load', function () {
+    init();
+  }, false);
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>call 一切都可借</title>
+</head>
+<body>
+  <script>
+  // 函数是js一等对象
+  // js没有类，Class 只是语法糖
+  // 借用构造函数
+  var A = function (name) {
+    this.name = name;
+  }
+  var B = function () {
+    // 想要一个name属性 向A借
+    // apply 和 call一样的，A函数执行一下，函数内部的this指向被指定为第一个参数
+    // this -> B的实例
+    // arguments所有参数的列表
+    // call第二个参数不能是数组，要展开来
+    // A.apply(this,arguments)
+    A.call(this, arguments[0])
+    // arguments就是['sven'] 按顺序给
+  }
+  B.prototype.getName = function () {
+    console.log(this.name);
+  }
+  var b = new B('sven');
+  b.getName();
+  // 立即执行函数 创建闭包，闭合空间 可以访问外面的 外面访问不到里面的
+  var x = 1;
+  (function() {
+    // var y = 2;
+    // alert(x+y)
+    console.log(arguments);
+    // argument是类数组 没有push的功能 但是js的借是超越种族超越限制的
+    Array.prototype.push.call(arguments, 3);
+    console.log(arguments)
+  })(1, 2);
+  </script>
+</body>
+</html>
