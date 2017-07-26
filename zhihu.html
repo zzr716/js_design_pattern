@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>账户登录粒子系统</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    height: 100%;
+  }
+  #canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #EFEFEF;
+  }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+  // 粒子系统 60颗
+  // draw update line
+  // 过程式编程 但其实有一定的结构 有对象、属性和行为 Class
+  // es6构造类的方式
+  /*
+   * Circle 类
+   * 提供粒子数据模型
+   * drawCircle
+   * move行为方法
+   * zzr 7-26
+   */
+  // 封装
+  class Circle {
+      constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.r = Math.random() * 10;
+          this._mx = Math.random();
+          this._my = Math.random();
+      }
+      drawCircle (ctx) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, 360);
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(204,204, 204,.3)';
+          ctx.fill();
+      }
+      move(w, h) {
+          this._mx = (this.x < w && this.x > 0)?this._mx: (-this._mx);
+          this._my = (this.y < h && this.y > 0)?this._my: (-this._my);
+          this.x += this._mx /2;
+          this.y += this._my /2;
+      }
+      drawLine (ctx, _circle) {
+          let dx = this.x - _circle.x;
+          let dy = this.y - _circle.y;
+          let d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 150) {
+              ctx.beginPath();
+              ctx.moveTo(this.x, this.y);
+              ctx.lineTo(_circle.x, _circle.y);
+              ctx.closePath();
+              ctx.strokeStyle = 'rgba(204, 204, 204, .3)';
+              ctx.stroke();
+          }
+      }
+  }
+  class CurrentCircle extends Circle {
+    constructor(x, y) {
+      // 调用父类的构造函数
+      super (x, y);
+    }
+    // 覆盖掉原方法 重写
+    drawCircle (ctx) {
+      ctx.beginPath();
+      this.r = 8;
+      ctx.arc(this.x, this.y, this.r, 0, 360);
+      ctx.fillStyle = 'rgba(255, 77, 54, .6)';
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  let w = canvas.width = canvas.offsetWidth;
+  let h = canvas.height = canvas.offsetHeight;
+  let circles = [];
+  let current_circle = new CurrentCircle(0, 0);
+  let init = function (num) {
+      for (var i = 0; i < num; i++) {
+          circles.push(new Circle(Math.random()*w, Math.random()*h));
+      }
+      draw();
+  }
+  function draw () {
+      ctx.clearRect(0, 0, w, h);
+      for(let i = 0; i < circles.length; i++) {
+          circles[i].move(w, h);
+          circles[i].drawCircle(ctx);
+          for (let j = i + 1; j < circles.length; j++) {
+              circles[i].drawLine(ctx, circles[j]);
+          }
+      }
+      if (current_circle.x) {
+        current_circle.drawCircle(ctx);
+        for (var k = 1; k < circles.length; k++) {
+          current_circle.drawLine(ctx, circles[k])
+        }
+      }
+      requestAnimationFrame(draw);
+  }
+  window.addEventListener('load', init(60));
+  window.addEventListener('mousemove', function(e) {
+    e = e || window.event; //ie兼容性
+    current_circle.x = e.clientX;
+    current_circle.y = e.clientY;
+  }, false)
+  window.addEventListener('mouseout', function (e) {
+    current_circle.x = 0;
+    current_circle.y = 0;
+  })
+  </script>
+</body>
+</html>
