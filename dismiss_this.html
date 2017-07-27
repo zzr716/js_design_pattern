@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>消失的this</title>
+</head>
+<body>
+  <script>
+  // 严格模式
+  'use strict';
+  var obj = {
+    myName: 'sven',
+    getName: function () {
+      // this有可能消失 严格模式时候 this指针没地可指
+      console.log(this)
+      return this.myName
+    }
+  }
+  // 作为对象的方法被调用
+  console.log(obj.getName()); // sven
+  var getName2 = obj.getName;
+  // console.log(getName2()); // undefined
+  var func = function (a, b, c) {
+    alert([a, b, c]);
+  }
+  // func(1, 2, 3)
+  // apply 和 call 区别只在参数
+  // func.apply(null, [1,2,3]);
+  func.call(null, 1,2,3)
+  </script>
+</body>
+</html>
