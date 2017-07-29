@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>豆瓣市集</title>
+  <style>
+  .homepage-hot-items {
+    zoom: 1;
+    margin: -27.5px;
+    margin-top: 0;
+  }
+  .product-item {
+    margin-bottom: 30px;
+    line-height: 1.6;
+    position: relative;
+  }
+  .p-img {
+    height: 280px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 2px #fff;
+  }
+  .product-item .p-img a {
+    width: 280px;
+    height: 280px;
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #e4e4e4;
+}
+.product-item .p-img a img {
+    max-width: 280px;
+    max-height: 280px;
+}
+a, a:link {
+    color: #5c5c5c;
+    cursor: pointer;
+    text-decoration: none;
+}
+  .p-title {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .p-title a {
+      color: #000;
+  }
+  .product-item .p-brand {
+    color: #9a9a9a;
+  }
+  .product-item .p-brand:before {
+    content: "by";
+    margin-right: 2px;
+}
+ .p-price {
+    color: #f05f50;
+    font-weight: 700;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+ }
+ .product-item del.price {
+    color: #9a9a9a;
+    text-decoration: line-through;
+}
+.product-item .price:before {
+    content: "\A5";
+    margin-right: 2px;
+}
+.product-item .p-tag {
+    padding: 1px 5px;
+    font-size: 10px;
+    border: 1px solid #f05f50;
+    color: #f05f50;
+    border-radius: 10px;
+    margin: 0 5px 2px;
+    line-height: 12px;
+    height: 12px;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+}
+.product-item .p-tag em {
+    font-size: 12px;
+    display: inline-block;
+  }
+  </style>
+</head>
+<body>
+  <div class="homepage-hot-items">
+    <div class="grid-item">
+      <div class="product-item">
+        <div class="p-img">
+          <a href="#" title="赫丽珠宝 Spelendour珍珠耳钉" targe="_blank">
+            <img src="https://img1.doubanio.com/view/dianpu_product_item/large/public/p488979.jpg" alt="" />
+            赫丽珠宝 Spelendour珍珠耳钉
+          </a>
+        </div>
+        <div class="p-title"></div>
+        <div class="p-brand"><a href="/shop/heli" target="_blank" title="赫丽珠宝">赫丽珠宝</a></div>
+        <div class="p-price">
+          <del class="price">206.00</del>
+          <i>164.8</i>
+          <!-- 命名杜绝一切皆业务 id css类名 本质？ 长的一样的一类元素 脱离业务回归界面（样式或组件） 语义化 对seo 友好-->
+          <span class="p-tag">
+            <em>暑期折扣</em>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
