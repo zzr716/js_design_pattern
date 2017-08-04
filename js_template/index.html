@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Coffee Or Tea</title>
+</head>
+<body>
+<h2>泡一杯咖啡</h2>
+<div>
+  把水煮沸<br>
+  把沸水冲泡咖啡<br>
+  把咖啡倒进杯子<br>
+  加糖和牛奶<br>
+</div>
+<h2>泡杯茶</h2>
+<div>
+  把水煮沸<br>
+  用沸水浸泡咖啡<br>
+  把茶水倒进杯子<br>
+  加柠檬<br>
+</div>
+<h2>泡饮品</h2>
+<p>
+  把水煮沸<br>
+  用沸水冲泡饮料<br>
+  把饮料倒进杯子<br>
+  加调料<br>
+</p>
+<script>
+// 模板方法设计模式 Java的版本翻译了一下
+// 抽象类？改为配置
+var Beverage = function (param) {
+  // 局部变量
+  var boilWater = function () {
+    console.log('把水煮沸');
+  }
+  var brew = param.brew || function () {
+    throw new Error('必须传递brew方法')
+  }
+  var pourInCup = param.pourInCup || function () {
+    throw new Error('必须传递pourInCup方法')
+  }
+  var addCondiments = param.addCondiments || function () {
+    throw new Error('必须传递addCondiments方法')
+  }
+  // F 代号 9527
+  var F = function () {}
+  // 规范一下流程
+  // 四个私有变量 闭包
+  // new F();
+  F.prototype.init = function () {
+    boilWater();
+    brew();
+    pourInCup();
+    addCondiments();
+  };
+  return F;
+}
+var Coffee = Beverage({
+  brew: function () {
+    console.log('用沸水泡咖啡');
+  },
+  pourInCup: function () {
+    console.log('把咖啡倒进杯子');
+  },
+  addCondiments: function () {
+    console.log('加糖和牛奶');
+  }
+})
+var coffee = new Coffee();
+coffee.init();
+  // var Coffee = function () {
+  // }
+  // Coffee.prototype.boilWater = function () {
+  //   console.log('水煮开了');
+  // }
+  // Coffee.prototype.brewCoffeeGriends = function () {
+  //   console.log('用沸水冲咖啡');
+  // }
+  // Coffee.prototype.pourInCup = function () {
+  //   console.log('把咖啡倒进杯子');
+  // }
+  // Coffee.prototype.addSugarAndMilk = function () {
+  //   console.log('加糖和牛奶');
+  // }
+  // // 封装 将实现的细节交给类的内部
+  // Coffee.prototype.init = function () {
+  //   this.boilWater();
+  //   this.brewCoffeeGriends();
+  //   this.pourInCup();
+  //   this.addSugarAndMilk();
+  // }
+  // var Tea = function () {
+  // }
+  // Tea.prototype.boilWater = function () {
+  //   console.log('水煮开了');
+  // }
+  // Tea.prototype.brewTeaGriends = function () {
+  //   console.log('用沸水冲咖啡');
+  // }
+  // Tea.prototype.pourInCup = function () {
+  //   console.log('把咖啡倒进杯子');
+  // }
+  // Tea.prototype.addSugarAndMilk = function () {
+  //   console.log('加糖和牛奶');
+  // }
+  // // 封装 将实现的细节交给类的内部
+  // Tea.prototype.init = function () {
+  //   this.boilWater();
+  //   this.brewTeaGriends();
+  //   this.pourInCup();
+  //   this.addSugarAndMilk();
+  // }
+  // class Tea {
+  //   constructor() {
+  //   }
+  //   boilWater () {
+  //     console.log('把水烧开');
+  //   }
+  //   steepTeaBag () {
+  //     console.log('用沸水浸泡茶叶')
+  //   }
+  //   pourInCup () {
+  //     console.log('把茶水倒进杯子')
+  //   }
+  //   addLemon () {
+  //     console.log('加柠檬');
+  //   }
+  //   init () {
+  //     this.boilWater();
+  //     this.steepTeaBag();
+  //     this.pourInCup();
+  //     this.addLemon();
+  //   }
+  // }
+  // var coffee = new Coffee();
+  // coffee.init();
+  // var tea = new Tea();
+  // tea.init();
+  // 父类 子类
+  // 继承 override
+  // 共同点 基类  分离差异点 子类的override
+  // 设计代码
+  // 抽象类 abstract class 不用实例化而是子类实现的一个抽象
+  // var Beverage = function () {}
+  // Beverage.prototype.boilWater = function () {
+  //   console.log('把水煮沸');
+  // }
+  // // 抽象方法
+  // Beverage.prototype.brew = function () {}
+  // Beverage.prototype.pourInCup = function () {}
+  // Beverage.prototype.addCondiments = function () {}
+  // Beverage.prototype.init = function () {
+  //   this.boilWater();
+  //   this.brew();
+  //   this.pourInCup();
+  //   this.addCondiments();
+  // }
+  // // 泡饮品的流程 模板模式 抽象类 抽象方法在子类中实现
+  // // es6 extends es5没有 如何做？
+  // var Coffee = function () {
+  //   // 将父类的构造方法拿来执行一下
+  //   Beverage.apply(this, arguments);
+  //   // this上才会有对象的属性
+  //
+  // }
+  // // js 的继承基于原型链的继承
+  // //   对象的方法查找是沿着原型链一直跑的
+  // //   查找自己的方法和属性
+  // //   父子孙 java等大型语言的继承 血统
+  // //   js的继承 尧舜禹 一类的人
+  // //   Object上的方法，其他对象都有
+  // //   [沿着js原型链找如果没有方法会去原型对象找]
+  //   // coffee.methodA
+  // // js查找方法会沿着原型链一直去找 要实现继承，就让原型链长出新的链分支
+  // // new Beverage() 对象 方法
+  // Coffee.prototype = new Beverage();
+  // var coffee = new Coffee();
+  // coffee.init();
+  // var Tea = function () {
+  // }
+  // Tea.prototype = new Beverage();
+  // Tea.prototype.brew = function () {
+  //   console.log('用水浸泡茶叶')
+  // }
+  // Tea.prototype.pourInCup = function () {
+  //   console.log('把茶倒进杯子')
+  // }
+  // Tea.prototype.addCondiments = function () {
+  //   console.log('加柠檬')
+  // }
+  // var tea = new Tea();
+  // tea.init();
+</script>
+</body>
+</html>
